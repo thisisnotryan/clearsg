@@ -62,6 +62,9 @@ accent colour, the answer it leads with, the three rows it shows, and its own fo
 answers changed, a way to describe another person, or how the map is set up. A question with no
 answer shows "Add" instead of a blank, which opens the same edit flow.
 
+A caregiver gets one card per person: "+ Add another person" appends a blank card, and with more
+than one card each carries a bin that asks for confirmation before it throws those answers away.
+
 Settings live in `src/lib/settings.ts` and start from persona-based defaults (a caregiver is
 warned earlier and gets the daily digest; an outdoor worker is warned later).
 

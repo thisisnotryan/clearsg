@@ -57,6 +57,7 @@ import stethoscope from './figma/stethoscope.png'
 import sun from './figma/sun.png'
 import toggleOff from './figma/toggle-off.svg'
 import toggleOn from './figma/toggle-on.svg'
+import trash from './figma/trash.png'
 import trendDown from './figma/trend-down.png'
 import trendUp from './figma/trend-up.png'
 import walking from './figma/walking.png'
@@ -92,6 +93,7 @@ import lightSlider from './figma/light/slider.png'
 import lightStethoscope from './figma/light/stethoscope.png'
 import lightSun from './figma/light/sun.png'
 import lightToggleOff from './figma/light/toggle-off.svg'
+import lightTrash from './figma/light/trash.png'
 import lightToggleOn from './figma/light/toggle-on.svg'
 import lightWalking from './figma/light/walking.png'
 
@@ -146,6 +148,7 @@ const DARK_ICONS = {
   sun,
   toggleOff,
   toggleOn,
+  trash,
   trendDown,
   trendUp,
   walking,
@@ -187,6 +190,7 @@ const LIGHT_ICONS: IconSet = {
   sun: lightSun,
   toggleOff: lightToggleOff,
   toggleOn: lightToggleOn,
+  trash: lightTrash,
   walking: lightWalking,
 }
 

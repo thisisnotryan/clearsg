@@ -152,9 +152,17 @@
   text-align: center;
 }
 
-.addPerson {
-  display: block;
+/* "+ Add another person" on the left, the bin on the right, as designed. */
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 30px;
   margin-top: 16px;
+}
+
+.addPerson {
   padding: 0;
   border: 0;
   background: none;
@@ -162,6 +170,51 @@
   font-size: 15px;
   font-weight: 600;
   cursor: pointer;
+}
+
+.trash {
+  /* Sits at the right edge whether or not the add link is beside it. */
+  margin-left: auto;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+
+/* Removing someone throws their answers away, so it is asked first. */
+.confirm {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  min-height: 30px;
+  margin-top: 16px;
+}
+
+.confirmText {
+  flex: 1;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--color-text-muted);
+}
+
+.cancel,
+.remove {
+  flex: none;
+  padding: 0;
+  border: 0;
+  background: none;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.cancel {
+  color: var(--color-link);
+}
+
+.remove {
+  color: var(--band-unhealthy-text);
 }
 
 .srOnly {

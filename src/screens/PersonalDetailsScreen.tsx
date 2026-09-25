@@ -3,7 +3,7 @@ import { useIcons } from '../assets/icons'
 import { ChoiceChip } from '../components/ChoiceChip'
 import { PERSONAL_QUESTIONS, type Question } from '../data/personalQuestions'
 import type { PersonaId } from '../lib/profile'
-import type { Answers, PersonalProfile } from '../lib/personal'
+import { loadPersonal, type Answers, type PersonalProfile } from '../lib/personal'
 import styles from './PersonalDetailsScreen.module.css'
 
 type Props = {
@@ -19,7 +19,14 @@ type Props = {
 export function PersonalDetailsScreen({ persona, onBack, onDone }: Props) {
   const icons = useIcons()
   const { title, subtitle, questions, repeatable } = PERSONAL_QUESTIONS[persona]
-  const [people, setPeople] = useState<Answers[]>([{}])
+  /*
+   * Editing from Settings comes back through this screen, so it starts from
+   * what is already stored — including anyone added from a profile card.
+   */
+  const [people, setPeople] = useState<Answers[]>(() => {
+    const stored = loadPersonal()
+    return stored && !stored.skipped && stored.persona === persona && stored.people.length ? stored.people : [{}]
+  })
 
   const answer = (personIndex: number, question: Question, optionId: string) => {
     setPeople((previous) =>

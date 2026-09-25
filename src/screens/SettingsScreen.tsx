@@ -1,9 +1,11 @@
 import { useIcons } from '../assets/icons'
-import { ProfileCard } from '../components/ProfileCard'
+import { ProfileCards } from '../components/ProfileCard'
 import { PsiThresholdSelect } from '../components/PsiThresholdSelect'
 import { Toggle } from '../components/Toggle'
 import type { Profile } from '../lib/profile'
 import { useInstall } from '../lib/useInstall'
+import { savePersonal, type PersonalProfile } from '../lib/personal'
+import { syncPushPreferences } from '../lib/push'
 import { usePersonal } from '../lib/usePersonal'
 import { usePush } from '../lib/usePush'
 import type { Settings } from '../lib/settings'
@@ -32,6 +34,15 @@ export function SettingsScreen({ profile, onBack, onEditProfile, onSignOut }: Pr
   const installer = useInstall()
   const personal = usePersonal()
 
+  /*
+   * Adding or removing a person can change who an alert is about, so the
+   * server's copy of the audience label is refreshed too.
+   */
+  const updatePersonal = (next: PersonalProfile) => {
+    savePersonal(next)
+    void syncPushPreferences(profile, settings)
+  }
+
   /* Alert switches drive the phone's push subscription as well as the setting. */
   const updateAlerts = (changes: Partial<Settings>) => {
     const next = { ...settings, ...changes }
@@ -47,7 +58,7 @@ export function SettingsScreen({ profile, onBack, onEditProfile, onSignOut }: Pr
 
       <h1 className={styles.title}>Settings</h1>
 
-      <ProfileCard profile={profile} personal={personal} onEdit={onEditProfile} />
+      <ProfileCards profile={profile} personal={personal} onEdit={onEditProfile} onChange={updatePersonal} />
 
       <h2 className={styles.sectionLabel}>Alerts</h2>
 
