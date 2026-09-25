@@ -28,8 +28,15 @@ export default async function handler(request: Request) {
     alertThreshold: Number(body.alertThreshold) || 51,
     unhealthyPsiAlert: body.unhealthyPsiAlert !== false,
     dailyDigest: Boolean(body.dailyDigest),
-    // Keep the episode state so changing settings doesn't re-alert.
-    aboveThreshold: existing?.aboveThreshold ?? false,
+    /*
+     * Keep the episode state so a settings change doesn't re-alert — unless
+     * the level itself moved, in which case the old state means nothing and
+     * would fire a bogus "air has cleared".
+     */
+    aboveThreshold:
+      existing && existing.alertThreshold === (Number(body.alertThreshold) || 51)
+        ? (existing.aboveThreshold ?? false)
+        : false,
     updatedAt: new Date().toISOString(),
   }
 

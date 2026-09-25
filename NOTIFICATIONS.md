@@ -2,8 +2,8 @@
 
 ClearSG sends two kinds of notification, both from Netlify:
 
-- **Unhealthy PSI alert** — when your region passes your alert level. Checked hourly,
-  ten past the hour, because NEA publishes on the hour.
+- **Unhealthy PSI alert** — when your region passes your alert level, and again when it drops
+  back below. Checked hourly, ten past the hour, because NEA publishes on the hour.
 - **Daily forecast digest** — one summary at 7am Singapore time.
 
 Each arrives even when the app is closed. Turning either switch on in Settings asks for
@@ -21,9 +21,10 @@ notification permission and registers the phone; turning both off unregisters it
 | `netlify/functions/check-alerts.ts` | Hourly. Pushes to whoever is over their level. |
 | `netlify/functions/daily-digest.ts` | Daily at 7am SGT. |
 
-An alert fires once per episode: when the reading crosses the level you get one push, and
-nothing more until it drops back below and rises again. `aboveThreshold` on each stored
-record tracks that.
+An alert fires once per episode: when the reading crosses the level you get one push, then an
+"air has cleared" push when it drops back below, and nothing in between. `aboveThreshold` on
+each stored record tracks which side of the level the region is on. Changing your alert level
+resets that state, so moving the level never fires a stray message.
 
 ## Setting it up on Netlify
 

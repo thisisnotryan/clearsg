@@ -24,12 +24,24 @@ export default async function handler() {
     const reading = psi[value.region]
     const above = reading >= value.alertThreshold
 
+    // Crossed up: one warning per episode.
     if (above && !value.aboveThreshold && value.unhealthyPsiAlert) {
       const ok = await sendPush(key, value, {
         title: `PSI ${reading} in ${REGION_LABELS[value.region]}`,
         body: `Air is ${bandLabel(reading)} — above your alert level of ${value.alertThreshold}. Tap for what to do.`,
         url: '/',
         tag: 'psi-alert',
+      })
+      if (ok) sent += 1
+    }
+
+    // Dropped back: say so, rather than leaving the warning as the last word.
+    if (!above && value.aboveThreshold && value.unhealthyPsiAlert) {
+      const ok = await sendPush(key, value, {
+        title: `Air has cleared in ${REGION_LABELS[value.region]}`,
+        body: `PSI is back down to ${reading} — ${bandLabel(reading)}, below your alert level of ${value.alertThreshold}.`,
+        url: '/',
+        tag: 'psi-clear',
       })
       if (ok) sent += 1
     }
