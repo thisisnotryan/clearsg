@@ -1,6 +1,7 @@
 import heroImage from '../assets/figma/mask-guide-hero.png'
 import { useIcons } from '../assets/icons'
 import { VerdictCard } from '../components/VerdictCard'
+import { getPersona } from '../data/personas'
 import { getRegion } from '../data/regions'
 import type { Profile } from '../lib/profile'
 import { todayRange } from '../lib/trend'
@@ -11,19 +12,22 @@ type Props = {
   profile: Profile
   onOpenSettings: () => void
   onOpenMaskGuide: () => void
+  onOpenTrend: () => void
 }
 
-export function HomeScreen({ profile, onOpenSettings, onOpenMaskGuide }: Props) {
+export function HomeScreen({ profile, onOpenSettings, onOpenMaskGuide, onOpenTrend }: Props) {
   const { current, history } = useAirQuality()
   const icons = useIcons()
   const region = getRegion(profile.region)
-  const psi = current[profile.region].psi24h
+  // Which reading leads depends on who the app is for.
+  const { metric, planning } = getPersona(profile.persona).emphasis
+  const reading = current[profile.region][metric]
   // NEA publishes no forecast, so the strip shows now against today so far.
-  const range = todayRange(history.psi24h, profile.region)
+  const range = todayRange(history[metric], profile.region)
   const outlook = [
-    { label: 'Now', value: psi },
-    { label: 'High today', value: range?.high ?? psi },
-    { label: 'Low today', value: range?.low ?? psi },
+    { label: 'Now', value: reading },
+    { label: 'High today', value: range?.high ?? reading },
+    { label: 'Low today', value: range?.low ?? reading },
   ]
 
   return (
@@ -37,17 +41,32 @@ export function HomeScreen({ profile, onOpenSettings, onOpenMaskGuide }: Props) 
       </header>
 
       <div className={styles.verdict}>
-        <VerdictCard metric="psi24h" value={psi} />
+        <VerdictCard metric={metric} value={reading} />
       </div>
 
+      {/* For someone planning around the air, the strip opens the trend. */}
       <ul className={styles.outlook}>
         {outlook.map((slot) => (
           <li key={slot.label} className={styles.outlookCard}>
-            <span className={styles.outlookLabel}>{slot.label}</span>
-            <span className={styles.outlookValue}>{slot.value}</span>
+            {planning ? (
+              <button type="button" className={styles.outlookButton} onClick={onOpenTrend}>
+                <span className={styles.outlookLabel}>{slot.label}</span>
+                <span className={styles.outlookValue}>{slot.value}</span>
+              </button>
+            ) : (
+              <>
+                <span className={styles.outlookLabel}>{slot.label}</span>
+                <span className={styles.outlookValue}>{slot.value}</span>
+              </>
+            )}
           </li>
         ))}
       </ul>
+      {planning && (
+        <button type="button" className={styles.trendLink} onClick={onOpenTrend}>
+          See the last 36 hours
+        </button>
+      )}
 
       <button type="button" className={styles.guide} onClick={onOpenMaskGuide}>
         <img className={styles.guideImage} src={heroImage} alt="" />

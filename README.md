@@ -42,6 +42,11 @@ dashboard strip shows now against today's high and low.
 
 Guide wording per PSI band lives in `src/data/guidance.ts`.
 
+The persona chosen during onboarding weights the same dashboard rather than changing screens
+(`emphasis` in `src/data/personas.ts`): "Myself" scales the text up, "Someone I care for" makes
+the strip open the trend, and "On the go often" leads with the 1-hour PM2.5 instead of the
+24-hour PSI.
+
 Settings live in `src/lib/settings.ts` and start from persona-based defaults (a caregiver is
 warned earlier and gets the daily digest; an outdoor worker is warned later).
 

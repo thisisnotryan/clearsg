@@ -35,6 +35,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   gap: 4px;
   aspect-ratio: 1;
   padding: 16px 4px;
@@ -42,6 +43,32 @@
   border-radius: var(--radius-card);
   background: var(--surface-bg);
   box-shadow: var(--surface-shadow);
+}
+
+/* The whole card is the target when it opens the trend. */
+.outlookButton {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+
+.trendLink {
+  display: block;
+  margin: 14px auto 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--color-link);
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
 }
 
 .outlookLabel {

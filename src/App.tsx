@@ -6,7 +6,7 @@ import { clearChecklist } from './lib/checklist'
 import { clearProfile, loadProfile, saveProfile, type PersonaId, type Profile, type RegionId } from './lib/profile'
 import { clearSettings } from './lib/settings'
 import { ThemeContext } from './lib/theme'
-import { useThemeSetting } from './lib/useThemeSetting'
+import { useTextScale, useThemeSetting } from './lib/useThemeSetting'
 import { ForecastScreen } from './screens/ForecastScreen'
 import { HomeScreen } from './screens/HomeScreen'
 import { LiveMapScreen } from './screens/LiveMapScreen'
@@ -35,6 +35,7 @@ export default function App() {
   // Editing from Settings runs the same steps, then goes back to Settings.
   const [editing, setEditing] = useState(false)
   const theme = useThemeSetting(profile?.persona)
+  useTextScale(profile?.persona)
 
   // Returning users skip onboarding.
   const finishSplash = useCallback(() => setStage(profile ? 'app' : 'welcome'), [profile])
@@ -121,6 +122,7 @@ export default function App() {
                 profile={profile}
                 onOpenSettings={() => setTab('settings')}
                 onOpenMaskGuide={() => setGuide({ screen: 'mask', from: 'tab' })}
+                onOpenTrend={() => setTab('forecast')}
               />
             ) : tab === 'forecast' ? (
               <ForecastScreen profile={profile} onBack={() => setTab('home')} />
