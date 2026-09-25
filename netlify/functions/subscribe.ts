@@ -28,6 +28,7 @@ export default async function handler(request: Request) {
     alertThreshold: Number(body.alertThreshold) || 51,
     unhealthyPsiAlert: body.unhealthyPsiAlert !== false,
     dailyDigest: Boolean(body.dailyDigest),
+    audience: typeof body.audience === 'string' ? body.audience.slice(0, 40) : null,
     /*
      * Keep the episode state so a settings change doesn't re-alert — unless
      * the level itself moved, in which case the old state means nothing and

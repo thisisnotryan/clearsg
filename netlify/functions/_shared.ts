@@ -15,6 +15,8 @@ export type Subscriber = {
   alertThreshold: number
   unhealthyPsiAlert: boolean
   dailyDigest: boolean
+  /** "your child", "your relative" — who the alert concerns, if anyone. */
+  audience?: string | null
   /** True while the reading is above the threshold, so one episode alerts once. */
   aboveThreshold?: boolean
   updatedAt: string

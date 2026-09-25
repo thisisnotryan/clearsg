@@ -17,9 +17,10 @@ export default async function handler() {
     const island = Object.values(psi)
     const highest = Math.max(...island)
 
+    const who = value.audience ? ` for ${value.audience}` : ''
     const ok = await sendPush(key, value, {
       title: `Today in ${REGION_LABELS[value.region]}: PSI ${reading}`,
-      body: `Air is ${bandLabel(reading)}. Highest across Singapore right now is ${highest}.`,
+      body: `Air is ${bandLabel(reading)}${who}. Highest across Singapore right now is ${highest}.`,
       url: '/',
       tag: 'daily-digest',
     })

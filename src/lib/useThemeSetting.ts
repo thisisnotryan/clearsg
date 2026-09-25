@@ -1,5 +1,4 @@
 import { useEffect } from 'react'
-import { getPersona } from '../data/personas'
 import type { PersonaId } from './profile'
 import type { Theme } from './theme'
 import { useSettings } from './useSettings'
@@ -23,17 +22,3 @@ export function useThemeSetting(persona: PersonaId | undefined): Theme {
   return theme
 }
 
-/**
- * Scales the text for personas that need it — the brief asks for a large-text
- * option for the elderly reader. Applied as a zoom on the scrolling areas, so
- * spacing grows with the type instead of the layout cramping.
- */
-export function useTextScale(persona: PersonaId | undefined) {
-  const scale = persona ? getPersona(persona).emphasis.textScale : 1
-
-  useEffect(() => {
-    document.documentElement.style.setProperty('--text-scale', String(scale))
-  }, [scale])
-
-  return scale
-}

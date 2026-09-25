@@ -26,9 +26,10 @@ export default async function handler() {
 
     // Crossed up: one warning per episode.
     if (above && !value.aboveThreshold && value.unhealthyPsiAlert) {
+      const who = value.audience ? ` for ${value.audience}` : ''
       const ok = await sendPush(key, value, {
         title: `PSI ${reading} in ${REGION_LABELS[value.region]}`,
-        body: `Air is ${bandLabel(reading)} — above your alert level of ${value.alertThreshold}. Tap for what to do.`,
+        body: `Air is ${bandLabel(reading)}${who} — above your alert level of ${value.alertThreshold}. Tap for what to do.`,
         url: '/',
         tag: 'psi-alert',
       })

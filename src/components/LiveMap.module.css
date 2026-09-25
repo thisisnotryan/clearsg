@@ -1,5 +1,4 @@
 .map {
-  zoom: calc(1 / var(--text-scale, 1));
   width: 100%;
   max-width: 342px;
   aspect-ratio: 1;

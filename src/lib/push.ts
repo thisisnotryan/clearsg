@@ -1,3 +1,4 @@
+import { audienceLabel, loadPersonal } from './personal'
 import type { Profile } from './profile'
 import type { Settings } from './settings'
 
@@ -44,7 +45,11 @@ export async function currentPushState(): Promise<PushState> {
   return subscription ? 'on' : 'off'
 }
 
-/** What the server needs to decide whether a given phone should be alerted. */
+/**
+ * What the server needs to decide whether a given phone should be alerted,
+ * and how to word it. Only a short audience label goes over the wire — never
+ * the health answers themselves.
+ */
 function preferences(profile: Profile, settings: Settings) {
   return {
     region: profile.region,
@@ -52,6 +57,7 @@ function preferences(profile: Profile, settings: Settings) {
     alertThreshold: settings.alertThreshold,
     unhealthyPsiAlert: settings.unhealthyPsiAlert,
     dailyDigest: settings.dailyDigest,
+    audience: audienceLabel(loadPersonal()),
   }
 }
 

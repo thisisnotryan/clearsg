@@ -2,9 +2,11 @@ import { useIcons } from '../assets/icons'
 import { GuideLayout } from '../components/GuideLayout'
 import { BANDS, psiBand } from '../data/airQuality'
 import { CHECKLIST_ITEMS, SAFETY_GUIDANCE } from '../data/guidance'
+import { watchForNote } from '../data/tailored'
 import { loadChecklist, saveChecklist } from '../lib/checklist'
 import type { Profile } from '../lib/profile'
 import { useAirQuality } from '../lib/airQualityContext'
+import { usePersonal } from '../lib/usePersonal'
 import { useEffect, useState, type CSSProperties } from 'react'
 import styles from './SafetyGuideScreen.module.css'
 
@@ -17,6 +19,8 @@ export function SafetyGuideScreen({ profile, onBack }: Props) {
   const [done, setDone] = useState<string[]>(loadChecklist)
   const { current } = useAirQuality()
   const icons = useIcons()
+  const personal = usePersonal()
+  const tailored = watchForNote(personal)
   const psi = current[profile.region].psi24h
   const bandKey = psiBand(psi)
   const band = BANDS[bandKey]
@@ -25,7 +29,11 @@ export function SafetyGuideScreen({ profile, onBack }: Props) {
   const cards = [
     { icon: icons.walking, title: 'Outdoor activity', body: guidance.outdoor },
     { icon: icons.house, title: 'At home', body: guidance.home },
-    { icon: icons.stethoscope, title: 'Watch for', body: guidance.watchFor },
+    {
+      icon: icons.stethoscope,
+      title: 'Watch for',
+      body: tailored ? `${guidance.watchFor} ${tailored}` : guidance.watchFor,
+    },
   ]
 
   useEffect(() => {

@@ -3,12 +3,19 @@ import { GuideLayout } from '../components/GuideLayout'
 import type { CSSProperties } from 'react'
 import { BANDS, psiBand, type Band } from '../data/airQuality'
 import { MASK_GUIDANCE, MASK_NOTE, MASK_TIPS } from '../data/guidance'
+import { maskTip } from '../data/tailored'
 import type { Profile } from '../lib/profile'
 import { useAirQuality } from '../lib/airQualityContext'
+import { usePersonal } from '../lib/usePersonal'
 import styles from './MaskGuideScreen.module.css'
 
-// One icon per tip, in the order drawn in the design.
+/*
+ * One icon per tip, in the order drawn in the design. A tip tailored to the
+ * person goes first and carries the shield, so the pairing still holds.
+ */
 const TIP_ICONS: (keyof IconSet)[] = ['slider', 'refresh30', 'highImportance']
+/** The refresh glyph is mirrored in the design. */
+const FLIPPED_ICON: keyof IconSet = 'refresh30'
 
 // The shield comes in three colourways; the two worst bands reuse the red one.
 const SHIELD_ICONS: Record<Band, keyof IconSet> = {
@@ -28,6 +35,13 @@ type Props = {
 export function MaskGuideScreen({ profile, onBack, onOpenSafetyGuide }: Props) {
   const { current } = useAirQuality()
   const icons = useIcons()
+  const personal = usePersonal()
+  // Their own circumstances first, then the general advice.
+  const tailored = maskTip(personal)
+  const tips = [
+    ...(tailored ? [{ text: tailored, icon: 'protectModerate' as keyof IconSet }] : []),
+    ...MASK_TIPS.map((text, index) => ({ text, icon: TIP_ICONS[index] })),
+  ]
   const psi = current[profile.region].psi24h
   const bandKey = psiBand(psi)
   const band = BANDS[bandKey]
@@ -52,16 +66,16 @@ export function MaskGuideScreen({ profile, onBack, onOpenSafetyGuide }: Props) {
       <p className={styles.note}>{MASK_NOTE}</p>
 
       <ul className={styles.tips}>
-        {MASK_TIPS.map((tip, index) => (
-          <li key={tip} className={styles.tip}>
+        {tips.map((tip) => (
+          <li key={tip.text} className={styles.tip}>
             <img
-              className={index === 1 ? styles.tipIconFlipped : styles.tipIcon}
-              src={icons[TIP_ICONS[index]] as string}
+              className={tip.icon === FLIPPED_ICON ? styles.tipIconFlipped : styles.tipIcon}
+              src={icons[tip.icon] as string}
               alt=""
               width={30}
               height={30}
             />
-            {tip}
+            {tip.text}
           </li>
         ))}
       </ul>

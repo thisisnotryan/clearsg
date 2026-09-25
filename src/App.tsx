@@ -3,22 +3,25 @@ import { AppShell } from './components/AppShell'
 import type { Tab } from './components/BottomNav'
 import { ThresholdAlert } from './components/ThresholdAlert'
 import { clearChecklist } from './lib/checklist'
+import { clearPersonal, savePersonal, type PersonalProfile } from './lib/personal'
 import { clearProfile, loadProfile, saveProfile, type PersonaId, type Profile, type RegionId } from './lib/profile'
-import { clearSettings } from './lib/settings'
+import { clearSettings, loadSettings, saveSettings } from './lib/settings'
+import { suggestedThreshold } from './data/tailored'
 import { ThemeContext } from './lib/theme'
-import { useTextScale, useThemeSetting } from './lib/useThemeSetting'
+import { useThemeSetting } from './lib/useThemeSetting'
 import { ForecastScreen } from './screens/ForecastScreen'
 import { HomeScreen } from './screens/HomeScreen'
 import { LiveMapScreen } from './screens/LiveMapScreen'
 import { LocationScreen } from './screens/LocationScreen'
 import { MaskGuideScreen } from './screens/MaskGuideScreen'
+import { PersonalDetailsScreen } from './screens/PersonalDetailsScreen'
 import { PersonaScreen } from './screens/PersonaScreen'
 import { SafetyGuideScreen } from './screens/SafetyGuideScreen'
 import { SettingsScreen } from './screens/SettingsScreen'
 import { SplashScreen } from './screens/SplashScreen'
 import { WelcomeScreen } from './screens/WelcomeScreen'
 
-type Stage = 'splash' | 'welcome' | 'location' | 'persona' | 'app'
+type Stage = 'splash' | 'welcome' | 'location' | 'persona' | 'details' | 'app'
 /**
  * Full-screen guides that open over a tab and have no nav bar. `from` is
  * where the guide was opened from, so Back returns there.
@@ -35,16 +38,24 @@ export default function App() {
   // Editing from Settings runs the same steps, then goes back to Settings.
   const [editing, setEditing] = useState(false)
   const theme = useThemeSetting(profile?.persona)
-  useTextScale(profile?.persona)
 
   // Returning users skip onboarding.
   const finishSplash = useCallback(() => setStage(profile ? 'app' : 'welcome'), [profile])
 
-  const finishOnboarding = () => {
+  const finishOnboarding = (personal: PersonalProfile) => {
     if (!region || !persona) return
     const next = { region, persona }
     saveProfile(next)
+    savePersonal(personal)
     setProfile(next)
+
+    /*
+     * Start people at an alert level that matches who they told us about:
+     * sensitive groups hear about it as soon as the air stops being good.
+     */
+    const settings = loadSettings(persona)
+    saveSettings({ ...settings, alertThreshold: suggestedThreshold(personal) })
+
     setTab(editing ? 'settings' : 'home')
     setEditing(false)
     setStage('app')
@@ -61,6 +72,7 @@ export default function App() {
     setProfile(null)
     setRegion(null)
     setPersona(null)
+    clearPersonal()
     clearChecklist()
     setGuide(null)
     setEditing(false)
@@ -88,9 +100,13 @@ export default function App() {
             persona={persona}
             onChange={setPersona}
             onBack={() => setStage('location')}
-            onNext={finishOnboarding}
+            onNext={() => setStage('details')}
           />
         )
+      case 'details':
+        return persona ? (
+          <PersonalDetailsScreen persona={persona} onBack={() => setStage('persona')} onDone={finishOnboarding} />
+        ) : null
       case 'app': {
         if (!profile) return null
         if (guide?.screen === 'mask') {

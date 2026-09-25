@@ -2,10 +2,13 @@ import heroImage from '../assets/figma/mask-guide-hero.png'
 import { useIcons } from '../assets/icons'
 import { VerdictCard } from '../components/VerdictCard'
 import { getPersona } from '../data/personas'
+import { bandKeyFor } from '../data/airQuality'
+import { dashboardNote } from '../data/tailored'
 import { getRegion } from '../data/regions'
 import type { Profile } from '../lib/profile'
 import { todayRange } from '../lib/trend'
 import { useAirQuality } from '../lib/airQualityContext'
+import { usePersonal } from '../lib/usePersonal'
 import styles from './HomeScreen.module.css'
 
 type Props = {
@@ -18,12 +21,14 @@ type Props = {
 export function HomeScreen({ profile, onOpenSettings, onOpenMaskGuide, onOpenTrend }: Props) {
   const { current, history } = useAirQuality()
   const icons = useIcons()
+  const personal = usePersonal()
   const region = getRegion(profile.region)
   // Which reading leads depends on who the app is for.
   const { metric, planning } = getPersona(profile.persona).emphasis
   const reading = current[profile.region][metric]
   // NEA publishes no forecast, so the strip shows now against today so far.
   const range = todayRange(history[metric], profile.region)
+  const note = dashboardNote(personal, bandKeyFor(metric, reading))
   const outlook = [
     { label: 'Now', value: reading },
     { label: 'High today', value: range?.high ?? reading },
@@ -43,6 +48,8 @@ export function HomeScreen({ profile, onOpenSettings, onOpenMaskGuide, onOpenTre
       <div className={styles.verdict}>
         <VerdictCard metric={metric} value={reading} />
       </div>
+
+      {note && <p className={styles.note}>{note}</p>}
 
       {/* For someone planning around the air, the strip opens the trend. */}
       <ul className={styles.outlook}>

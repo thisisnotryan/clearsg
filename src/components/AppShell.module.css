@@ -7,8 +7,6 @@
 }
 
 .content {
-  /* Larger type for personas that ask for it; see useTextScale. */
-  zoom: var(--text-scale, 1);
   flex: 1;
   /* min-height lets the flex child shrink so its own scrollbar is used. */
   min-height: 0;

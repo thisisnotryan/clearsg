@@ -1,0 +1,137 @@
+.screen {
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
+  max-width: var(--screen-max-width);
+  margin: 0 auto;
+}
+
+.content {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior: contain;
+  padding: calc(19px + env(safe-area-inset-top)) var(--gutter) 16px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.back {
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+
+.skip {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--color-link);
+  font-size: 18px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.title {
+  margin-top: 22px;
+  font-size: 30px;
+  font-weight: 500;
+}
+
+.subtitle {
+  margin-top: 9px;
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--color-text-muted);
+}
+
+.person + .person {
+  margin-top: 8px;
+  padding-top: 20px;
+  border-top: 0.5px solid var(--color-divider);
+}
+
+.personHeader {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.personTitle {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.remove {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--color-text-muted);
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.question {
+  margin-top: 26px;
+}
+
+.questionLabel {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--color-text-muted);
+}
+
+.options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px 12px;
+  margin-top: 16px;
+}
+
+.add {
+  display: block;
+  margin-top: 28px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--color-link);
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.footer {
+  flex: none;
+  padding: 16px var(--gutter) calc(30px + env(safe-area-inset-bottom));
+}
+
+.action {
+  width: 100%;
+  max-width: 332px;
+  min-height: 64px;
+  margin: 0 auto;
+  display: block;
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius-card);
+  background: var(--surface-bg);
+  box-shadow: var(--surface-shadow);
+  font-size: 25px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.action:hover {
+  background: var(--color-hover-bg);
+}

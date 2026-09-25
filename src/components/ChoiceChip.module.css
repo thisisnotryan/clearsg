@@ -1,0 +1,27 @@
+.chip {
+  min-height: 52px;
+  /* Tight enough that pairs like "Young child" and "Elderly relative" sit on
+     one row, as they do in the design. */
+  padding: 0 18px;
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius-pill);
+  background: var(--surface-bg);
+  box-shadow: var(--surface-shadow);
+  color: var(--chip-text);
+  font-size: clamp(18px, 5vw, 20px);
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color 120ms, color 120ms;
+}
+
+.chip:hover:not(.selected) {
+  background: var(--color-hover-bg);
+}
+
+/* Selected keeps its dark blue treatment in both themes, as designed. */
+.selected {
+  border-color: var(--color-selected-border);
+  background: var(--color-selected-bg);
+  color: #6299d9;
+}

@@ -43,9 +43,13 @@ dashboard strip shows now against today's high and low.
 Guide wording per PSI band lives in `src/data/guidance.ts`.
 
 The persona chosen during onboarding weights the same dashboard rather than changing screens
-(`emphasis` in `src/data/personas.ts`): "Myself" scales the text up, "Someone I care for" makes
-the strip open the trend, and "On the go often" leads with the 1-hour PM2.5 instead of the
-24-hour PSI.
+(`emphasis` in `src/data/personas.ts`): "Someone I care for" makes the strip open the trend, and
+"On the go often" leads with the 1-hour PM2.5 instead of the 24-hour PSI.
+
+After picking a persona, an optional screen asks a few questions (`src/data/personalQuestions.ts`).
+The answers stay on the phone (`src/lib/personal.ts`) and tailor the wording across the app plus
+the starting alert level (`src/data/tailored.ts`); only a short audience label such as "your child"
+is sent with a push subscription. Everything can be skipped, and skipping leaves the app generic.
 
 Settings live in `src/lib/settings.ts` and start from persona-based defaults (a caregiver is
 warned earlier and gets the daily digest; an outdoor worker is warned later).

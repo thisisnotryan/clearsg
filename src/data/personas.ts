@@ -14,8 +14,6 @@ import onTheGoIconSelected from '../assets/figma/persona-onthego-selected.png'
 export type Emphasis = {
   /** Headline reading: the day's PSI, or what the air is doing right now. */
   metric: Metric
-  /** Everything in the scrolling area is scaled by this. */
-  textScale: number
   /** Points the dashboard at the trend, for someone planning around it. */
   planning: boolean
 }
@@ -39,8 +37,7 @@ export const PERSONAS: Persona[] = [
     icon: myselfIcon,
     iconSelected: myselfIconSelected,
     iconSize: { width: 26, height: 36 },
-    // Madam Tan in the brief: one clear verdict, in larger type.
-    emphasis: { metric: 'psi24h', textScale: 1.15, planning: false },
+    emphasis: { metric: 'psi24h', planning: false },
   },
   {
     id: 'someone',
@@ -50,7 +47,7 @@ export const PERSONAS: Persona[] = [
     iconSelected: someoneIconSelected,
     iconSize: { width: 40, height: 40 },
     // Mrs Rahman: planning school runs and windows, so lead to the trend.
-    emphasis: { metric: 'psi24h', textScale: 1, planning: true },
+    emphasis: { metric: 'psi24h', planning: true },
   },
   {
     id: 'onTheGo',
@@ -61,7 +58,7 @@ export const PERSONAS: Persona[] = [
     iconSize: { width: 40, height: 40 },
     // Rizwan, outdoors all day: what the air is doing right now, not a
     // 24-hour average.
-    emphasis: { metric: 'pm25_1h', textScale: 1, planning: false },
+    emphasis: { metric: 'pm25_1h', planning: false },
   },
 ]
 
