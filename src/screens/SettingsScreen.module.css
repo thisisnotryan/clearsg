@@ -96,6 +96,19 @@
   color: var(--color-row-label);
 }
 
+.install {
+  flex: none;
+  padding: 9px 20px;
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius-card);
+  background: var(--surface-bg);
+  box-shadow: var(--surface-shadow);
+  color: var(--color-link);
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
 .pushNote {
   margin-top: 14px;
   font-size: 15px;

@@ -4,6 +4,7 @@ import { Toggle } from '../components/Toggle'
 import { getPersona } from '../data/personas'
 import { getRegion } from '../data/regions'
 import type { Profile } from '../lib/profile'
+import { useInstall } from '../lib/useInstall'
 import { usePush } from '../lib/usePush'
 import type { Settings } from '../lib/settings'
 import { useSettings } from '../lib/useSettings'
@@ -28,6 +29,7 @@ export function SettingsScreen({ profile, onBack, onEditProfile, onSignOut }: Pr
   const { settings, update } = useSettings(profile.persona)
   const icons = useIcons()
   const push = usePush(profile, settings)
+  const installer = useInstall()
   const persona = getPersona(profile.persona)
   const region = getRegion(profile.region)
 
@@ -96,6 +98,22 @@ export function SettingsScreen({ profile, onBack, onEditProfile, onSignOut }: Pr
       <hr className={styles.divider} />
 
       <h2 className={styles.sectionLabel}>Preferences</h2>
+
+      {/* Installing puts ClearSG on the home screen, with notifications. */}
+      {installer.canInstall && (
+        <div className={styles.row}>
+          <span className={styles.rowLabel}>Install ClearSG</span>
+          <button type="button" className={styles.install} onClick={() => void installer.install()}>
+            Install
+          </button>
+        </div>
+      )}
+      {!installer.canInstall && installer.needsIosInstructions && (
+        <p className={styles.pushNote}>
+          To install ClearSG, tap Share in Safari, then “Add to Home Screen”. Notifications work once it is
+          installed.
+        </p>
+      )}
 
       {/* One switch for the theme: left is dark, right is light. */}
       <div className={styles.row}>
