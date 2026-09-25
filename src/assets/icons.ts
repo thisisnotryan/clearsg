@@ -7,7 +7,10 @@ import { useTheme, type Theme } from '../lib/theme'
 
 import backArrow from './figma/back-arrow.png'
 import birthdayCake from './figma/birthday-cake.png'
+import cardHeart from './figma/card-heart.png'
+import cardMotorcycle from './figma/card-motorcycle.png'
 import check from './figma/check.png'
+import clock from './figma/clock.png'
 import dots1 from './figma/dots-1.svg'
 import dots2 from './figma/dots-2.svg'
 import dots3 from './figma/dots-3.svg'
@@ -21,9 +24,11 @@ import legendGood from './figma/legend-good.svg'
 import legendModerate from './figma/legend-moderate.svg'
 import legendUnhealthy from './figma/legend-unhealthy.svg'
 import liveDot from './figma/live-dot.svg'
+import location from './figma/location.png'
 import logout from './figma/logout.png'
 import lungs from './figma/lungs.png'
 import mapPin from './figma/map-pin.png'
+import motorcycle from './figma/motorcycle.png'
 import navHome from './figma/nav-home.png'
 import navHomeActive from './figma/nav-home-active.png'
 import navLocation from './figma/nav-location.png'
@@ -58,6 +63,9 @@ import walking from './figma/walking.png'
 
 import lightBackArrow from './figma/light/back-arrow.png'
 import lightBirthdayCake from './figma/light/birthday-cake.png'
+import lightCardHeart from './figma/light/card-heart.png'
+import lightCardMotorcycle from './figma/light/card-motorcycle.png'
+import lightClock from './figma/light/clock.png'
 import lightDropdownArrow from './figma/light/dropdown-arrow.png'
 import lightForwardSmall from './figma/light/forward-small.png'
 import lightGear from './figma/light/gear.png'
@@ -66,7 +74,9 @@ import lightHouse from './figma/light/house.png'
 import lightLegendGood from './figma/light/legend-good.svg'
 import lightLegendModerate from './figma/light/legend-moderate.svg'
 import lightLegendUnhealthy from './figma/light/legend-unhealthy.svg'
+import lightLocation from './figma/light/location.png'
 import lightLungs from './figma/light/lungs.png'
+import lightMotorcycle from './figma/light/motorcycle.png'
 import lightNavHomeActive from './figma/light/nav-home-active.png'
 import lightNavLocationActive from './figma/light/nav-location-active.png'
 import lightNavSettingsActive from './figma/light/nav-settings-active.png'
@@ -88,7 +98,10 @@ import lightWalking from './figma/light/walking.png'
 const DARK_ICONS = {
   backArrow,
   birthdayCake,
+  cardHeart,
+  cardMotorcycle,
   check,
+  clock,
   dots: [dots1, dots2, dots3],
   dropdownArrow,
   forward,
@@ -100,9 +113,11 @@ const DARK_ICONS = {
   legendModerate,
   legendUnhealthy,
   liveDot,
+  location,
   logout,
   lungs,
   mapPin,
+  motorcycle,
   navHome,
   navHomeActive,
   navLocation,
@@ -142,6 +157,9 @@ const LIGHT_ICONS: IconSet = {
   ...DARK_ICONS,
   backArrow: lightBackArrow,
   birthdayCake: lightBirthdayCake,
+  cardHeart: lightCardHeart,
+  cardMotorcycle: lightCardMotorcycle,
+  clock: lightClock,
   dropdownArrow: lightDropdownArrow,
   forwardSmall: lightForwardSmall,
   gear: lightGear,
@@ -150,7 +168,9 @@ const LIGHT_ICONS: IconSet = {
   legendGood: lightLegendGood,
   legendModerate: lightLegendModerate,
   legendUnhealthy: lightLegendUnhealthy,
+  location: lightLocation,
   lungs: lightLungs,
+  motorcycle: lightMotorcycle,
   navHomeActive: lightNavHomeActive,
   navLocationActive: lightNavLocationActive,
   navSettingsActive: lightNavSettingsActive,

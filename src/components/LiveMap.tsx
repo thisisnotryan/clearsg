@@ -13,6 +13,8 @@ type Props = {
   metric: Metric
   /** Region to drop the "you are here" pin on. */
   region: RegionId
+  /** Other areas someone covers, marked with a smaller pin. */
+  pinned?: RegionId[]
 }
 
 const FILL_OPACITY = 0.45
@@ -32,8 +34,16 @@ const pinIcon = L.icon({
   iconAnchor: [25, 46],
 })
 
+// Areas someone covers are marked too, smaller so the home pin still leads.
+const coveredIcon = L.icon({
+  iconUrl: mapPin,
+  iconSize: [34, 34],
+  iconAnchor: [17, 31],
+  className: styles.coveredPin,
+})
+
 /** Singapore with each NEA region shaded by its current reading. */
-export function LiveMap({ readings, metric, region }: Props) {
+export function LiveMap({ readings, metric, region, pinned = [] }: Props) {
   // Leaflet needs real colours, so the band tokens are resolved here and
   // re-resolved whenever the theme changes.
   const theme = useTheme()
@@ -41,6 +51,7 @@ export function LiveMap({ readings, metric, region }: Props) {
   const mapRef = useRef<L.Map | null>(null)
   const shapesRef = useRef<L.GeoJSON | null>(null)
   const pinRef = useRef<L.Marker | null>(null)
+  const coveredRef = useRef<L.Marker[]>([])
 
   useEffect(() => {
     const map = L.map(containerRef.current!, {
@@ -60,6 +71,7 @@ export function LiveMap({ readings, metric, region }: Props) {
       mapRef.current = null
       shapesRef.current = null
       pinRef.current = null
+      coveredRef.current = []
     }
   }, [])
 
@@ -88,9 +100,17 @@ export function LiveMap({ readings, metric, region }: Props) {
     // Keep panning near Singapore instead of drifting off into the sea.
     map.setMaxBounds(shapesRef.current.getBounds().pad(PAN_MARGIN))
 
+    coveredRef.current.forEach((marker) => marker.remove())
+    coveredRef.current = pinned
+      .filter((id) => id !== region)
+      .map((id) =>
+        L.marker(getRegion(id).center, { icon: coveredIcon, keyboard: false, interactive: false }).addTo(map),
+      )
+
+    // Added last so "you are here" sits above the areas around it.
     pinRef.current?.remove()
     pinRef.current = L.marker(getRegion(region).center, { icon: pinIcon, keyboard: false, interactive: false }).addTo(map)
-  }, [readings, metric, region, theme])
+  }, [readings, metric, region, pinned, theme])
 
   return <div ref={containerRef} className={styles.map} role="img" aria-label="Map of Singapore shaded by air quality" />
 }

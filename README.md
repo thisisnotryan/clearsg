@@ -54,8 +54,13 @@ short audience label such as "your child", and the regions someone says they cov
 a push subscription. Everything can be skipped, and skipping leaves the app generic.
 
 "On the go often" also asks which areas someone usually covers. Those areas are watched alongside
-the region chosen at setup, so alerts and the daily digest speak about the worst of them, and the
-dashboard names whichever is highest right now.
+the region chosen at setup, so alerts and the daily digest speak about the worst of them, the
+dashboard names whichever is highest right now, and the Live Map pins them.
+
+Each persona has its own profile card (`DESIGNS` in `src/components/ProfileCard.tsx`): its own
+accent colour, the answer it leads with, the three rows it shows, and its own footer — what the
+answers changed, a way to describe another person, or how the map is set up. A question with no
+answer shows "Add" instead of a blank, which opens the same edit flow.
 
 Settings live in `src/lib/settings.ts` and start from persona-based defaults (a caregiver is
 warned earlier and gets the daily digest; an outdoor worker is warned later).

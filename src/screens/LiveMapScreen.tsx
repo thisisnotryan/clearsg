@@ -1,3 +1,4 @@
+import { useMemo } from 'react'
 import { useIcons } from '../assets/icons'
 import { LiveMap } from '../components/LiveMap'
 import { ScreenHeading } from '../components/ScreenHeading'
@@ -5,6 +6,8 @@ import { bandFor, compareToNational, formatUpdatedAt } from '../data/airQuality'
 import { getRegion } from '../data/regions'
 import type { Profile } from '../lib/profile'
 import { useAirQuality } from '../lib/airQualityContext'
+import { coveredRegions } from '../lib/personal'
+import { usePersonal } from '../lib/usePersonal'
 import styles from './LiveMapScreen.module.css'
 
 type Props = {
@@ -17,6 +20,10 @@ type Props = {
 export function LiveMapScreen({ profile, onBack, onOpenSafetyGuide }: Props) {
   const { current, updatedAt, source, refresh } = useAirQuality()
   const icons = useIcons()
+  // Someone who told us the areas they cover sees them pinned here. Held
+  // steady so the map isn't torn down and rebuilt on every render.
+  const personal = usePersonal()
+  const covered = useMemo(() => coveredRegions(personal), [personal])
   const legend = [
     { icon: icons.legendGood, label: 'Good' },
     { icon: icons.legendModerate, label: 'Moderate' },
@@ -37,7 +44,7 @@ export function LiveMapScreen({ profile, onBack, onOpenSafetyGuide }: Props) {
       <ScreenHeading title="Live now" subtitle={updated} />
 
       <div className={styles.map}>
-        <LiveMap readings={current} metric="pm25_1h" region={profile.region} />
+        <LiveMap readings={current} metric="pm25_1h" region={profile.region} pinned={covered} />
       </div>
 
       <ul className={styles.legend}>

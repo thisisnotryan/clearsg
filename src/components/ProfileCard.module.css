@@ -1,3 +1,24 @@
+/*
+ * Each persona carries its own accent: the circle behind the glyph and the
+ * strip at the foot. The designs use the same colours in both themes, so
+ * these are literal rather than theme tokens.
+ */
+.myself {
+  --avatar-bg: #032042;
+  --strip-bg: #032042;
+  --strip-text: #639bdc;
+}
+
+.someone {
+  --avatar-bg: #026602;
+}
+
+.onTheGo {
+  --avatar-bg: #311a00;
+  --strip-bg: #281a09;
+  --strip-text: var(--band-moderate-text);
+}
+
 .card {
   margin-top: 22px;
   padding: 16px;
@@ -13,9 +34,6 @@
   gap: 15px;
 }
 
-/* "On the go often" is far longer than "Myself", so the name gives way on
-   narrow phones rather than pushing the region onto a second line. */
-
 .avatar {
   flex: none;
   display: grid;
@@ -23,10 +41,11 @@
   width: 65px;
   height: 65px;
   border-radius: 50%;
-  background: var(--color-selected-bg);
+  background: var(--avatar-bg);
 }
 
 .avatar img {
+  width: auto;
   object-fit: contain;
 }
 
@@ -38,13 +57,15 @@
   min-width: 0;
 }
 
+/* "On the go often" is far longer than "Myself", so the name gives way on
+   narrow phones rather than pushing the subtitle onto a second line. */
 .name {
   font-size: clamp(19px, 5.5vw, 22px);
   font-weight: 700;
   line-height: 1.15;
 }
 
-.region {
+.subtitle {
   overflow: hidden;
   font-size: clamp(16px, 4.5vw, 18px);
   font-weight: 500;
@@ -104,8 +125,19 @@
   text-align: right;
 }
 
-/* Why this person's alerts differ from the default. */
-.note {
+/* An unanswered question invites an answer instead of showing a blank. */
+.add {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--color-link);
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* What the answers changed, or how the map is set up. */
+.strip {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -113,9 +145,30 @@
   margin-top: 16px;
   padding: 8px 16px;
   border-radius: 10px;
-  background: var(--color-selected-bg);
-  color: var(--color-selected-text);
+  background: var(--strip-bg);
+  color: var(--strip-text);
   font-size: 15px;
   font-weight: 700;
   text-align: center;
+}
+
+.addPerson {
+  display: block;
+  margin-top: 16px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--color-link);
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.srOnly {
+  position: absolute;
+  overflow: hidden;
+  clip-path: inset(50%);
+  width: 1px;
+  height: 1px;
+  white-space: nowrap;
 }

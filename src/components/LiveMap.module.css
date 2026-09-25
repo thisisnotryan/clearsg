@@ -26,3 +26,8 @@
 .tooltip:global(.leaflet-tooltip)::before {
   display: none;
 }
+
+/* Areas someone covers: present, but quieter than the "you are here" pin. */
+.coveredPin {
+  opacity: 0.75;
+}

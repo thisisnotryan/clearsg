@@ -14,7 +14,8 @@ export type Question = {
   multi?: boolean
   /** An answer that cancels the others, such as "None". */
   exclusive?: string
-  options: { id: string; label: string }[]
+  /** `short` is what the profile card shows when the chip label is wordy. */
+  options: { id: string; label: string; short?: string }[]
 }
 
 const AGE_OPTIONS = [
@@ -27,9 +28,16 @@ const CONDITION_OPTIONS = [
   { id: 'asthma', label: 'Asthma' },
   { id: 'heart', label: 'Heart condition' },
   { id: 'pregnant', label: 'Pregnant' },
-  { id: 'eczema', label: 'Eczema/skin sensitivity' },
+  { id: 'eczema', label: 'Eczema/skin sensitivity', short: 'Eczema' },
   { id: 'other', label: 'Others' },
   { id: 'none', label: 'None' },
+]
+
+const OUTDOORS_OPTIONS = [
+  { id: 'under30', label: 'Under 30 min' },
+  { id: '30to2', label: '30min~2hrs' },
+  { id: '2to5', label: '2~5 hrs' },
+  { id: '5plus', label: '5+ hrs' },
 ]
 
 export type PersonaQuestions = {
@@ -54,16 +62,7 @@ export const PERSONAL_QUESTIONS: Record<PersonaId, PersonaQuestions> = {
         // The designed order for this screen puts eczema with "Others".
         options: CONDITION_OPTIONS.filter((option) => option.id !== 'eczema'),
       },
-      {
-        id: 'outdoors',
-        label: 'Typical time outdoors',
-        options: [
-          { id: 'under30', label: 'Under 30 min' },
-          { id: '30to2', label: '30min~2hrs' },
-          { id: '2to5', label: '2~5 hrs' },
-          { id: '5plus', label: '5+ hrs' },
-        ],
-      },
+      { id: 'outdoors', label: 'Typical time outdoors', options: OUTDOORS_OPTIONS },
     ],
   },
 
@@ -84,6 +83,7 @@ export const PERSONAL_QUESTIONS: Record<PersonaId, PersonaQuestions> = {
       },
       { id: 'age', label: 'Their age range', options: AGE_OPTIONS },
       { id: 'conditions', label: 'Their health conditions', multi: true, exclusive: 'none', options: CONDITION_OPTIONS },
+      { id: 'outdoors', label: 'Their time outdoors', options: OUTDOORS_OPTIONS },
     ],
   },
 
@@ -135,7 +135,17 @@ export const PERSONAL_QUESTIONS: Record<PersonaId, PersonaQuestions> = {
   },
 }
 
-export function labelFor(questionId: string, optionId: string, persona: PersonaId) {
+function optionFor(questionId: string, optionId: string, persona: PersonaId) {
   const question = PERSONAL_QUESTIONS[persona].questions.find((q) => q.id === questionId)
-  return question?.options.find((option) => option.id === optionId)?.label ?? optionId
+  return question?.options.find((option) => option.id === optionId)
+}
+
+export function labelFor(questionId: string, optionId: string, persona: PersonaId) {
+  return optionFor(questionId, optionId, persona)?.label ?? optionId
+}
+
+/** The same answer, trimmed for the profile card's narrow right column. */
+export function shortLabelFor(questionId: string, optionId: string, persona: PersonaId) {
+  const option = optionFor(questionId, optionId, persona)
+  return option?.short ?? option?.label ?? optionId
 }
