@@ -7,6 +7,7 @@ import {
   REGION_LABELS,
   sendPush,
   subscribers,
+  worstRegion,
 } from './_shared'
 
 /*
@@ -21,14 +22,15 @@ export default async function handler() {
 
   let sent = 0
   for (const { key, value } of await allSubscribers()) {
-    const reading = psi[value.region]
+    const region = worstRegion(value, psi)
+    const reading = psi[region]
     const above = reading >= value.alertThreshold
 
     // Crossed up: one warning per episode.
     if (above && !value.aboveThreshold && value.unhealthyPsiAlert) {
       const who = value.audience ? ` for ${value.audience}` : ''
       const ok = await sendPush(key, value, {
-        title: `PSI ${reading} in ${REGION_LABELS[value.region]}`,
+        title: `PSI ${reading} in ${REGION_LABELS[region]}`,
         body: `Air is ${bandLabel(reading)}${who} — above your alert level of ${value.alertThreshold}. Tap for what to do.`,
         url: '/',
         tag: 'psi-alert',
@@ -39,7 +41,7 @@ export default async function handler() {
     // Dropped back: say so, rather than leaving the warning as the last word.
     if (!above && value.aboveThreshold && value.unhealthyPsiAlert) {
       const ok = await sendPush(key, value, {
-        title: `Air has cleared in ${REGION_LABELS[value.region]}`,
+        title: `Air has cleared in ${REGION_LABELS[region]}`,
         body: `PSI is back down to ${reading} — ${bandLabel(reading)}, below your alert level of ${value.alertThreshold}.`,
         url: '/',
         tag: 'psi-clear',

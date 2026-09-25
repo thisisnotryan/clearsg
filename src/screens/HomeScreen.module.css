@@ -30,6 +30,19 @@
   color: var(--color-row-label);
 }
 
+/* Sits under the tailored note, so it stays the quieter of the two. */
+.routes {
+  margin-top: 14px;
+  font-size: 15px;
+  font-weight: 600;
+  text-align: center;
+  color: var(--color-text-muted);
+}
+
+.note + .routes {
+  margin-top: 8px;
+}
+
 .outlook {
   display: grid;
   /* minmax(0, …) lets the cards shrink instead of overflowing narrow phones. */

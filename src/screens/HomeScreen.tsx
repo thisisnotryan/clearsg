@@ -3,7 +3,7 @@ import { useIcons } from '../assets/icons'
 import { VerdictCard } from '../components/VerdictCard'
 import { getPersona } from '../data/personas'
 import { bandKeyFor } from '../data/airQuality'
-import { dashboardNote } from '../data/tailored'
+import { dashboardNote, routesNote } from '../data/tailored'
 import { getRegion } from '../data/regions'
 import type { Profile } from '../lib/profile'
 import { todayRange } from '../lib/trend'
@@ -29,6 +29,8 @@ export function HomeScreen({ profile, onOpenSettings, onOpenMaskGuide, onOpenTre
   // NEA publishes no forecast, so the strip shows now against today so far.
   const range = todayRange(history[metric], profile.region)
   const note = dashboardNote(personal, bandKeyFor(metric, reading))
+  // For someone working across several areas, which of them is worst now.
+  const routes = routesNote(personal, current, metric)
   const outlook = [
     { label: 'Now', value: reading },
     { label: 'High today', value: range?.high ?? reading },
@@ -50,6 +52,7 @@ export function HomeScreen({ profile, onOpenSettings, onOpenMaskGuide, onOpenTre
       </div>
 
       {note && <p className={styles.note}>{note}</p>}
+      {routes && <p className={styles.routes}>{routes}</p>}
 
       {/* For someone planning around the air, the strip opens the trend. */}
       <ul className={styles.outlook}>

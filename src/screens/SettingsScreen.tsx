@@ -1,10 +1,10 @@
 import { useIcons } from '../assets/icons'
+import { ProfileCard } from '../components/ProfileCard'
 import { PsiThresholdSelect } from '../components/PsiThresholdSelect'
 import { Toggle } from '../components/Toggle'
-import { getPersona } from '../data/personas'
-import { getRegion } from '../data/regions'
 import type { Profile } from '../lib/profile'
 import { useInstall } from '../lib/useInstall'
+import { usePersonal } from '../lib/usePersonal'
 import { usePush } from '../lib/usePush'
 import type { Settings } from '../lib/settings'
 import { useSettings } from '../lib/useSettings'
@@ -30,8 +30,7 @@ export function SettingsScreen({ profile, onBack, onEditProfile, onSignOut }: Pr
   const icons = useIcons()
   const push = usePush(profile, settings)
   const installer = useInstall()
-  const persona = getPersona(profile.persona)
-  const region = getRegion(profile.region)
+  const personal = usePersonal()
 
   /* Alert switches drive the phone's push subscription as well as the setting. */
   const updateAlerts = (changes: Partial<Settings>) => {
@@ -48,23 +47,7 @@ export function SettingsScreen({ profile, onBack, onEditProfile, onSignOut }: Pr
 
       <h1 className={styles.title}>Settings</h1>
 
-      <section className={styles.profile}>
-        <span className={styles.avatar}>
-          <img
-            src={persona.iconSelected}
-            alt=""
-            width={persona.iconSize.width * 0.9}
-            height={persona.iconSize.height * 0.9}
-          />
-        </span>
-        <span className={styles.profileText}>
-          <span className={styles.profileName}>{persona.title}</span>
-          <span className={styles.profileRegion}>{region.label}, Singapore</span>
-        </span>
-        <button type="button" className={styles.edit} onClick={onEditProfile}>
-          Edit
-        </button>
-      </section>
+      <ProfileCard profile={profile} personal={personal} onEdit={onEditProfile} />
 
       <h2 className={styles.sectionLabel}>Alerts</h2>
 

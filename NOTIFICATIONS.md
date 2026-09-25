@@ -54,5 +54,7 @@ resets that state, so moving the level never fires a stray message.
 
 ## Privacy
 
-A subscription record holds the push endpoint and keys, the chosen region and persona, and the
-alert preferences. No account, name or precise location is stored.
+A subscription record holds the push endpoint and keys, the chosen region and persona, the alert
+preferences, the regions someone covers, and a short audience label such as "your child" when one
+applies. The health answers behind that label never leave the phone. No account, name or precise
+location is stored.

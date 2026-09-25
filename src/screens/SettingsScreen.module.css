@@ -14,62 +14,6 @@
   font-weight: 500;
 }
 
-.profile {
-  display: flex;
-  align-items: center;
-  gap: 21px;
-  margin-top: 22px;
-  padding: 20px;
-  border: 1px solid var(--surface-border);
-  border-radius: var(--radius-card);
-  background: var(--surface-bg);
-  box-shadow: var(--surface-shadow);
-}
-
-.avatar {
-  flex: none;
-  display: grid;
-  place-items: center;
-  width: 65px;
-  height: 65px;
-  border-radius: 50%;
-  background: var(--color-selected-bg);
-}
-
-.avatar img {
-  object-fit: contain;
-}
-
-.profileText {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  min-width: 0;
-}
-
-.profileName {
-  font-size: 25px;
-  font-weight: 700;
-}
-
-.profileRegion {
-  font-size: 20px;
-  font-weight: 600;
-  color: var(--color-text-muted);
-}
-
-.edit {
-  flex: none;
-  padding: 0;
-  border: 0;
-  background: none;
-  color: var(--color-link);
-  font-size: 20px;
-  font-weight: 700;
-  cursor: pointer;
-}
-
 .sectionLabel {
   margin-top: 36px;
   font-size: 20px;

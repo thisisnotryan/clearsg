@@ -1,3 +1,4 @@
+import { REGIONS } from './regions'
 import type { PersonaId } from '../lib/profile'
 
 /*
@@ -119,6 +120,16 @@ export const PERSONAL_QUESTIONS: Record<PersonaId, PersonaQuestions> = {
           { id: 'foot', label: 'On foot' },
           { id: 'car', label: 'Car/Van' },
         ],
+      },
+      {
+        /*
+         * Where someone actually spends the day. Alerts watch every area
+         * picked here, not just the one region they chose at setup.
+         */
+        id: 'areas',
+        label: 'Areas you usually cover',
+        multi: true,
+        options: REGIONS.map((region) => ({ id: region.id, label: region.label })),
       },
     ],
   },

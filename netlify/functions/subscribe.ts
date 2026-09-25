@@ -21,23 +21,33 @@ export default async function handler(request: Request) {
   const store = subscribers()
   const existing = (await store.get(key, { type: 'json' })) as Subscriber | null
 
+  const threshold = Number(body.alertThreshold) || 51
+  // The areas someone covers, beyond the region they signed up in.
+  const areas = Array.isArray(body.areas)
+    ? REGIONS.filter((region) => (body.areas as RegionId[]).includes(region))
+    : []
+
+  /*
+   * Keep the episode state so a settings change doesn't re-alert — unless
+   * what is being watched moved, in which case the old state means nothing
+   * and would fire a bogus "air has cleared".
+   */
+  const sameWatch =
+    existing &&
+    existing.alertThreshold === threshold &&
+    existing.region === body.region &&
+    (existing.areas ?? []).join() === areas.join()
+
   const record: Subscriber = {
     subscription: body.subscription as Subscriber['subscription'],
     region: body.region,
     persona: body.persona ?? 'myself',
-    alertThreshold: Number(body.alertThreshold) || 51,
+    alertThreshold: threshold,
     unhealthyPsiAlert: body.unhealthyPsiAlert !== false,
     dailyDigest: Boolean(body.dailyDigest),
     audience: typeof body.audience === 'string' ? body.audience.slice(0, 40) : null,
-    /*
-     * Keep the episode state so a settings change doesn't re-alert — unless
-     * the level itself moved, in which case the old state means nothing and
-     * would fire a bogus "air has cleared".
-     */
-    aboveThreshold:
-      existing && existing.alertThreshold === (Number(body.alertThreshold) || 51)
-        ? (existing.aboveThreshold ?? false)
-        : false,
+    areas,
+    aboveThreshold: sameWatch ? (existing.aboveThreshold ?? false) : false,
     updatedAt: new Date().toISOString(),
   }
 

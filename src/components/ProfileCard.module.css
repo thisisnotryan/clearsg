@@ -1,0 +1,121 @@
+.card {
+  margin-top: 22px;
+  padding: 16px;
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius-card);
+  background: var(--surface-bg);
+  box-shadow: var(--surface-shadow);
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+/* "On the go often" is far longer than "Myself", so the name gives way on
+   narrow phones rather than pushing the region onto a second line. */
+
+.avatar {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 65px;
+  height: 65px;
+  border-radius: 50%;
+  background: var(--color-selected-bg);
+}
+
+.avatar img {
+  object-fit: contain;
+}
+
+.text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.name {
+  font-size: clamp(19px, 5.5vw, 22px);
+  font-weight: 700;
+  line-height: 1.15;
+}
+
+.region {
+  overflow: hidden;
+  font-size: clamp(16px, 4.5vw, 18px);
+  font-weight: 500;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: var(--color-text-muted);
+}
+
+.edit {
+  flex: none;
+  align-self: flex-start;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--color-link);
+  font-size: 20px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.rows {
+  display: flex;
+  flex-direction: column;
+  gap: 17px;
+  margin: 16px 2px 0;
+}
+
+/*
+ * Icon, what was asked, and the answer pushed to the right. A long answer
+ * drops to its own full-width line rather than wrapping into a narrow column.
+ */
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 9px;
+}
+
+.rowIcon {
+  flex: none;
+  object-fit: contain;
+}
+
+.rowLabel {
+  flex: none;
+  font-size: 15px;
+  font-weight: 600;
+  white-space: nowrap;
+  color: var(--color-text-muted);
+}
+
+.rowValue {
+  flex: 1 0 auto;
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+  text-align: right;
+}
+
+/* Why this person's alerts differ from the default. */
+.note {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  margin-top: 16px;
+  padding: 8px 16px;
+  border-radius: 10px;
+  background: var(--color-selected-bg);
+  color: var(--color-selected-text);
+  font-size: 15px;
+  font-weight: 700;
+  text-align: center;
+}

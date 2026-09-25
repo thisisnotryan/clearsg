@@ -1,4 +1,4 @@
-import { audienceLabel, loadPersonal } from './personal'
+import { audienceLabel, coveredRegions, loadPersonal } from './personal'
 import type { Profile } from './profile'
 import type { Settings } from './settings'
 
@@ -47,17 +47,19 @@ export async function currentPushState(): Promise<PushState> {
 
 /**
  * What the server needs to decide whether a given phone should be alerted,
- * and how to word it. Only a short audience label goes over the wire — never
- * the health answers themselves.
+ * and how to word it: the regions to watch, and a short audience label.
+ * Never the health answers themselves — those stay on the phone.
  */
 function preferences(profile: Profile, settings: Settings) {
+  const personal = loadPersonal()
   return {
     region: profile.region,
     persona: profile.persona,
     alertThreshold: settings.alertThreshold,
     unhealthyPsiAlert: settings.unhealthyPsiAlert,
     dailyDigest: settings.dailyDigest,
-    audience: audienceLabel(loadPersonal()),
+    audience: audienceLabel(personal),
+    areas: coveredRegions(personal),
   }
 }
 

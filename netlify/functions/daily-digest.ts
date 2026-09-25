@@ -1,5 +1,13 @@
 import type { Config } from '@netlify/functions'
-import { allSubscribers, bandLabel, configureWebPush, fetchPsi, REGION_LABELS, sendPush } from './_shared'
+import {
+  allSubscribers,
+  bandLabel,
+  configureWebPush,
+  fetchPsi,
+  REGION_LABELS,
+  sendPush,
+  worstRegion,
+} from './_shared'
 
 /*
  * The daily forecast digest: one summary each morning for whoever has it
@@ -13,13 +21,17 @@ export default async function handler() {
   for (const { key, value } of await allSubscribers()) {
     if (!value.dailyDigest) continue
 
-    const reading = psi[value.region]
-    const island = Object.values(psi)
-    const highest = Math.max(...island)
+    // Someone who named the areas they cover hears about the worst of those.
+    const region = worstRegion(value, psi)
+    const reading = psi[region]
+    const highest = Math.max(...Object.values(psi))
 
     const who = value.audience ? ` for ${value.audience}` : ''
+    const title = value.areas?.length
+      ? `Today across your areas: PSI ${reading} in ${REGION_LABELS[region]}`
+      : `Today in ${REGION_LABELS[region]}: PSI ${reading}`
     const ok = await sendPush(key, value, {
-      title: `Today in ${REGION_LABELS[value.region]}: PSI ${reading}`,
+      title,
       body: `Air is ${bandLabel(reading)}${who}. Highest across Singapore right now is ${highest}.`,
       url: '/',
       tag: 'daily-digest',

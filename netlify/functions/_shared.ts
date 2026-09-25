@@ -17,6 +17,8 @@ export type Subscriber = {
   dailyDigest: boolean
   /** "your child", "your relative" — who the alert concerns, if anyone. */
   audience?: string | null
+  /** Regions someone moves through, beyond the one they signed up in. */
+  areas?: RegionId[]
   /** True while the reading is above the threshold, so one episode alerts once. */
   aboveThreshold?: boolean
   updatedAt: string
@@ -85,6 +87,15 @@ export async function fetchPsi(): Promise<Readings> {
     psi[region] = Math.round(block[region])
   }
   return { psi, timestamp: item.timestamp }
+}
+
+/**
+ * The region an alert should speak about: the worst of everywhere someone
+ * told us they spend time, falling back to the region they signed up in.
+ */
+export function worstRegion(subscriber: Subscriber, psi: Record<RegionId, number>): RegionId {
+  const watched = [subscriber.region, ...(subscriber.areas ?? [])]
+  return watched.reduce((worst, region) => (psi[region] > psi[worst] ? region : worst), subscriber.region)
 }
 
 export function bandLabel(psi: number) {

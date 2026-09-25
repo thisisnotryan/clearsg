@@ -1,4 +1,4 @@
-import type { PersonaId } from './profile'
+import type { PersonaId, RegionId } from './profile'
 
 /*
  * The optional answers from the "tell us a bit more" screen. They shape the
@@ -76,6 +76,16 @@ export function isSensitive(personal: PersonalProfile | null) {
     who.includes('elderly') ||
     conditions.some((condition) => SENSITIVE_CONDITIONS.includes(condition))
   )
+}
+
+const REGION_IDS: RegionId[] = ['north', 'south', 'east', 'west', 'central']
+
+/**
+ * The regions someone told us they move through. Alerts watch all of them,
+ * so a rider isn't warned only about the area they happened to sign up in.
+ */
+export function coveredRegions(personal: PersonalProfile | null): RegionId[] {
+  return REGION_IDS.filter((id) => allAnswers(personal, 'areas').includes(id))
 }
 
 /** Long hours outdoors, whoever the app is for. */

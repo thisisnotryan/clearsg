@@ -1,5 +1,13 @@
-import { allAnswers, audienceLabel, isSensitive, type PersonalProfile } from '../lib/personal'
-import type { Band } from './airQuality'
+import {
+  allAnswers,
+  audienceLabel,
+  coveredRegions,
+  isOutdoorHeavy,
+  isSensitive,
+  type PersonalProfile,
+} from '../lib/personal'
+import type { Band, CurrentReadings, Metric } from './airQuality'
+import { getRegion } from './regions'
 
 /*
  * Lines written from the answers people gave after picking a persona. Each
@@ -76,4 +84,42 @@ export function watchForNote(personal: PersonalProfile | null): string | null {
  */
 export function suggestedThreshold(personal: PersonalProfile | null) {
   return isSensitive(personal) ? 51 : 101
+}
+
+/** "North, West and Central" — for sentences that list the areas someone covers. */
+export function listLabels(labels: string[]) {
+  if (labels.length <= 1) return labels[0] ?? ''
+  return `${labels.slice(0, -1).join(', ')} and ${labels[labels.length - 1]}`
+}
+
+/**
+ * The line inside the profile card that says, in one phrase, why this
+ * person's alerts differ from the default.
+ */
+export function tailoringNote(personal: PersonalProfile | null): string | null {
+  if (!personal || personal.skipped) return null
+
+  if (has(personal, 'conditions', 'asthma')) return 'Alerts trigger earlier due to asthma'
+  if (has(personal, 'conditions', 'heart')) return 'Alerts trigger earlier due to a heart condition'
+  if (has(personal, 'conditions', 'pregnant')) return 'Alerts trigger earlier due to pregnancy'
+  if (has(personal, 'conditions', 'eczema')) return 'Alerts trigger earlier due to eczema'
+  if (has(personal, 'who', 'child') || has(personal, 'age', 'under12')) return 'Alerts trigger earlier for a young child'
+  if (has(personal, 'who', 'elderly') || has(personal, 'age', '60plus')) return 'Alerts trigger earlier for an older adult'
+
+  const areas = coveredRegions(personal)
+  if (areas.length) return `Alerts watch ${listLabels(areas.map((id) => getRegion(id).label))}`
+  if (isOutdoorHeavy(personal)) return 'Alerts tuned for long hours outdoors'
+  return null
+}
+
+/**
+ * For someone working across several areas: which of them is worst right now.
+ * Pointless with only one area, since that is already the headline reading.
+ */
+export function routesNote(personal: PersonalProfile | null, current: CurrentReadings, metric: Metric) {
+  const areas = coveredRegions(personal)
+  if (areas.length < 2) return null
+
+  const worst = areas.reduce((a, b) => (current[b][metric] > current[a][metric] ? b : a))
+  return `Across your areas, ${getRegion(worst).label} is highest right now at ${current[worst][metric]}.`
 }

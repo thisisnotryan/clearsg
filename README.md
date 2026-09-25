@@ -48,8 +48,14 @@ The persona chosen during onboarding weights the same dashboard rather than chan
 
 After picking a persona, an optional screen asks a few questions (`src/data/personalQuestions.ts`).
 The answers stay on the phone (`src/lib/personal.ts`) and tailor the wording across the app plus
-the starting alert level (`src/data/tailored.ts`); only a short audience label such as "your child"
-is sent with a push subscription. Everything can be skipped, and skipping leaves the app generic.
+the starting alert level (`src/data/tailored.ts`); the profile card in Settings
+(`src/components/ProfileCard.tsx`) shows them back with a line saying what they changed. Only a
+short audience label such as "your child", and the regions someone says they cover, are sent with
+a push subscription. Everything can be skipped, and skipping leaves the app generic.
+
+"On the go often" also asks which areas someone usually covers. Those areas are watched alongside
+the region chosen at setup, so alerts and the daily digest speak about the worst of them, and the
+dashboard names whichever is highest right now.
 
 Settings live in `src/lib/settings.ts` and start from persona-based defaults (a caregiver is
 warned earlier and gets the daily digest; an outdoor worker is warned later).
