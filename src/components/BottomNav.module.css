@@ -1,0 +1,21 @@
+.nav {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  width: 100%;
+  max-width: 325px;
+  margin: 0 auto;
+}
+
+.tab {
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+
+.tab img {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+}

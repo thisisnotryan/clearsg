@@ -1,0 +1,75 @@
+.screen {
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
+  max-width: var(--screen-max-width);
+  margin: 0 auto;
+  padding: calc(19px + env(safe-area-inset-top)) var(--gutter) calc(47px + env(safe-area-inset-bottom));
+}
+
+.back {
+  align-self: flex-start;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+
+.content {
+  flex: 1;
+  /* Scrolls on its own when a step is taller than the screen; the
+     button and dots below stay put. */
+  min-height: 0;
+  overflow-y: auto;
+  /* Vertical only: elements that sit wider than the text gutter (the region
+     chips) must not turn into a sideways scroll. */
+  overflow-x: hidden;
+  overscroll-behavior: contain;
+  /* Keeps the last card clear of the button, and stops the scroll edge
+     cutting off its shadow. */
+  padding-bottom: 16px;
+  display: flex;
+  flex-direction: column;
+}
+
+.footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 21px;
+  padding-top: 32px;
+}
+
+.action {
+  width: 100%;
+  max-width: 332px;
+  height: 64px;
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius-card);
+  background: var(--surface-bg);
+  box-shadow: var(--surface-shadow);
+  font-size: 25px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 120ms, opacity 120ms;
+}
+
+.action:hover:not(:disabled) {
+  background: var(--color-hover-bg);
+}
+
+.action:active:not(:disabled) {
+  background: var(--color-active-bg);
+}
+
+.action:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.dots {
+  width: 54px;
+  height: 12px;
+}

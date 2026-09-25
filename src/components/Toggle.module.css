@@ -1,0 +1,14 @@
+.toggle {
+  flex: none;
+  width: 70px;
+  height: 35px;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+
+.toggle img {
+  width: 70px;
+  height: 35px;
+}

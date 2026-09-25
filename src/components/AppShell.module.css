@@ -1,0 +1,33 @@
+.shell {
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
+  max-width: var(--screen-max-width);
+  margin: 0 auto;
+}
+
+.content {
+  flex: 1;
+  /* min-height lets the flex child shrink so its own scrollbar is used. */
+  min-height: 0;
+  overflow-y: auto;
+  /* Vertical only — see OnboardingLayout. */
+  overflow-x: hidden;
+  overscroll-behavior: contain;
+  padding: calc(24px + env(safe-area-inset-top)) var(--gutter) 24px;
+}
+
+.muted {
+  opacity: 0.55;
+  filter: saturate(0.6);
+  transition: opacity 200ms;
+}
+
+.navWrap {
+  flex: none;
+  /* The divider runs wider than the icon row, as in the design. */
+  border-top: 0.5px solid var(--color-divider);
+  margin: 0 var(--gutter);
+  padding: 23px 0 calc(29px + env(safe-area-inset-bottom));
+  background: var(--color-bg);
+}

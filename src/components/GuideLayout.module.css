@@ -1,0 +1,42 @@
+.screen {
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
+  max-width: var(--screen-max-width);
+  margin: 0 auto;
+}
+
+.content {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior: contain;
+  padding: calc(19px + env(safe-area-inset-top)) var(--gutter) calc(40px + env(safe-area-inset-bottom));
+}
+
+.back {
+  display: block;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+
+.title {
+  margin-top: 22px;
+  font-size: 30px;
+  font-weight: 500;
+}
+
+.notice {
+  margin-top: 16px;
+}
+
+.muted {
+  opacity: 0.55;
+  filter: saturate(0.6);
+  transition: opacity 200ms;
+}

@@ -1,0 +1,99 @@
+.bandPill {
+  display: inline-flex;
+  align-items: center;
+  min-height: 50px;
+  margin-top: 22px;
+  padding: 0 25px;
+  border-radius: var(--radius-pill);
+  background: var(--band-fill);
+  font-size: 20px;
+  font-weight: 600;
+}
+
+/* Light mode fills the pill with the band colour instead. */
+:global(:root[data-theme='light']) .bandPill {
+  background: var(--band-solid);
+  color: #ffffff !important;
+}
+
+.card {
+  margin-top: 27px;
+  padding: 16px 19px 20px;
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius-card);
+  background: var(--surface-bg);
+  box-shadow: var(--surface-shadow);
+}
+
+.cardTitle {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.cardBody {
+  margin-top: 11px;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--color-text-muted);
+}
+
+.checklistTitle {
+  margin-top: 32px;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.checklist {
+  display: flex;
+  flex-direction: column;
+  gap: 17px;
+  margin: 24px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.checklistItem {
+  display: flex;
+  align-items: center;
+  gap: 17px;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  text-align: left;
+  cursor: pointer;
+}
+
+.box,
+.boxChecked {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 29px;
+  height: 29px;
+  border-radius: 5px;
+}
+
+.box {
+  border: 1px solid var(--checkbox-border);
+  background: var(--checkbox-bg);
+}
+
+.boxChecked {
+  background: #6da7ec;
+}
+
+.label,
+.labelDone {
+  color: var(--color-row-label);
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.labelDone {
+  color: var(--color-text-muted);
+  text-decoration: line-through;
+}

@@ -1,0 +1,52 @@
+.alert {
+  background: var(--band-fill);
+  display: flex;
+  gap: 12px;
+  margin-bottom: 16px;
+  padding: 14px 16px;
+  border-radius: var(--radius-card);
+}
+
+:global(:root[data-theme='light']) .alert {
+  background: var(--surface-bg);
+  box-shadow: var(--surface-shadow);
+}
+
+.alert img {
+  flex: none;
+  margin-top: 2px;
+  object-fit: contain;
+}
+
+.body {
+  flex: 1;
+  min-width: 0;
+}
+
+.title {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.detail {
+  margin-top: 4px;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.actions {
+  display: flex;
+  gap: 18px;
+  margin-top: 10px;
+}
+
+.action {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  text-decoration: underline;
+  cursor: pointer;
+}

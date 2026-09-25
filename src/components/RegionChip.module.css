@@ -1,0 +1,27 @@
+.chip {
+  width: 100%;
+  max-width: 117px;
+  height: 52px;
+  justify-self: center;
+  padding: 0;
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius-pill);
+  background: var(--surface-bg);
+  box-shadow: var(--surface-shadow);
+  color: var(--chip-text);
+  font-size: 25px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 120ms, color 120ms;
+}
+
+.chip:hover:not(.selected) {
+  background: var(--color-hover-bg);
+}
+
+/* Selected keeps its dark blue treatment in both themes, as designed. */
+.selected {
+  border-color: var(--color-border);
+  background: var(--color-selected-bg);
+  color: var(--color-selected-text);
+}

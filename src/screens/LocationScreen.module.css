@@ -1,0 +1,23 @@
+/*
+ * Six columns so the five chips lay out three-then-two and stay centred:
+ * each chip spans two columns, and the second row starts one column in.
+ * Fixed-width chips would drop to two per row on narrow phones.
+ */
+.chips {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 22px 10px;
+  margin: 28px 0 0;
+}
+
+.chips > * {
+  grid-column: span 2;
+}
+
+.chips > *:nth-child(4) {
+  grid-column: 2 / span 2;
+}
+
+.map {
+  margin-top: 32px;
+}

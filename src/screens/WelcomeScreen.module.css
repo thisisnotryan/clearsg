@@ -1,0 +1,19 @@
+.logo {
+  width: min(328px, 100%);
+  height: auto;
+  margin: 16px auto 0;
+}
+
+.headline {
+  margin: 21px 0 0 2px;
+  font-size: 35px;
+  font-weight: 500;
+}
+
+.tagline {
+  max-width: 335px;
+  margin: 21px 0 0 2px;
+  font-size: 25px;
+  font-weight: 500;
+  color: var(--color-text-muted);
+}

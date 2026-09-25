@@ -1,0 +1,37 @@
+.notice {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+  padding: 10px 14px;
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius-card);
+  background: var(--surface-bg);
+  box-shadow: var(--surface-shadow);
+}
+
+.text {
+  flex: 1;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-text-muted);
+}
+
+.retry {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--color-link);
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.retry:disabled {
+  color: var(--color-text-muted);
+  cursor: default;
+}

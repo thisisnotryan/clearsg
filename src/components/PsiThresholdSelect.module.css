@@ -1,0 +1,175 @@
+.wrap {
+  position: relative;
+  flex: none;
+}
+
+.trigger {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--color-text-muted);
+  font-size: 20px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.arrow,
+.arrowOpen {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+  transition: transform 150ms;
+}
+
+.arrowOpen {
+  transform: rotate(180deg);
+}
+
+.panel {
+  position: absolute;
+  top: calc(100% + 9px);
+  right: 0;
+  z-index: 10;
+  min-width: 232px;
+  padding: 10px 14px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  /* Opaque so the settings rows underneath stay hidden and unclickable. */
+  background: var(--color-bg);
+  box-shadow: 0 8px 24px rgb(0 0 0 / 25%);
+}
+
+/* Flipped when the screen runs out below. */
+.panelAbove {
+  top: auto;
+  bottom: calc(100% + 9px);
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.option {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  width: 100%;
+  padding: 7px 0;
+  border: 0;
+  background: none;
+  color: var(--color-text-muted);
+  font-size: 18px;
+  font-weight: 700;
+  text-align: left;
+  cursor: pointer;
+}
+
+.option:hover {
+  color: var(--color-text);
+}
+
+.optionSelected {
+  color: var(--color-link);
+}
+
+.optionValue {
+  font-family: var(--font-numeric);
+  font-size: 16px;
+}
+
+.custom {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 2px 0;
+}
+
+.customTitle {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.stepper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.step {
+  flex: none;
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.step:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.customValue {
+  flex: 1;
+  width: 100%;
+  min-width: 0;
+  height: 44px;
+  padding: 0 8px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-numeric);
+  font-size: 20px;
+  font-weight: 700;
+  text-align: center;
+}
+
+/* Chrome's spinners duplicate the − and + buttons. */
+.customValue::-webkit-outer-spin-button,
+.customValue::-webkit-inner-spin-button {
+  margin: 0;
+  appearance: none;
+}
+
+.customValue {
+  appearance: textfield;
+}
+
+.customHint {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-text-muted);
+}
+
+.customActions {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 2px;
+}
+
+.customAction {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--color-link);
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+}

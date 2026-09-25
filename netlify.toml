@@ -1,0 +1,18 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[functions]
+  node_bundler = "esbuild"
+
+# Single-page app: every path serves index.html, except the functions.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+[[headers]]
+  for = "/sw.js"
+  [headers.values]
+    # The worker must never be served stale, or push stops working after a deploy.
+    Cache-Control = "no-cache"

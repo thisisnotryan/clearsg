@@ -1,0 +1,12 @@
+.map {
+  width: 100%;
+  max-width: 342px;
+  aspect-ratio: 1;
+  margin: 0 auto;
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  background: #d9d6cf;
+  /* Keep Leaflet's panes below app UI. */
+  isolation: isolate;
+  z-index: 0;
+}

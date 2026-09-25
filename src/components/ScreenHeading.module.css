@@ -1,0 +1,17 @@
+.heading {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  margin-top: 22px;
+}
+
+.title {
+  font-size: 30px;
+  font-weight: 500;
+}
+
+.subtitle {
+  font-size: 22px;
+  font-weight: 500;
+  color: var(--color-text-muted);
+}

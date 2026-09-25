@@ -1,0 +1,159 @@
+/* Design tokens — values taken from the ClearSG Figma file */
+:root {
+  /* Dark mode (the default). */
+  --color-bg: #1a1a19;
+  --color-text: #ffffff;
+  --color-text-muted: #b2b0b0;
+  --color-border: #656565;
+  --color-divider: #858585;
+  --color-brand: #b0ddf4;
+  --color-link: #639bdc;
+
+  /* Cards: outlined on dark, white with a shadow on light. */
+  --surface-bg: var(--color-bg);
+  --surface-border: var(--color-border);
+  --surface-shadow: none;
+  /* Panels that sit darker than the page (PSI pill, note cards, inner strip). */
+  --color-inset-bg: #000000;
+  --color-inset-text: var(--color-text-muted);
+  --color-hover-bg: #252524;
+  --color-active-bg: #2e2e2d;
+
+  /* Region chips read muted on dark, but solid on light. */
+  --chip-text: var(--color-text-muted);
+  /* Region rows, settings rows, guide body text. */
+  --color-row-label: #ffffff;
+  /* The "you are in" card on the Live Map. */
+  --livecard-bg: #032042;
+  --livecard-text: #639bdc;
+  --livecard-divider: #639bdc;
+  --checkbox-bg: #000000;
+  --checkbox-border: var(--color-text-muted);
+
+  --color-selected-bg: #032042;
+  --color-selected-border: #1f68c9;
+  --color-selected-text: #639bdc;
+  --color-selected-text-muted: #5b7ca3;
+
+  /* The PSI/PM2.5 switch: track, and the pill marking the chosen side. */
+  --color-switch-track: #ffffff;
+  --color-switch-pill: var(--color-bg);
+  --color-switch-text: var(--color-text);
+  --color-switch-text-muted: var(--color-text-muted);
+
+  /*
+   * Air quality bands. "text" is the number and label, "fill" the card behind
+   * them on dark, "solid" the bars and pills that are filled in both themes.
+   */
+  --band-good-text: #0f850f;
+  --band-good-fill: #11260f;
+  --band-good-solid: #0d950d;
+  --band-moderate-text: #cb8700;
+  --band-moderate-fill: #311a00;
+  --band-moderate-solid: #cb8700;
+  --band-unhealthy-text: #ce6b6b;
+  --band-unhealthy-fill: #3c0e0e;
+  --band-unhealthy-solid: #ce6b6b;
+  --band-veryUnhealthy-text: #e05a5a;
+  --band-veryUnhealthy-fill: #380d0d;
+  --band-veryUnhealthy-solid: #e05a5a;
+  --band-hazardous-text: #c063d8;
+  --band-hazardous-fill: #2a0e33;
+  --band-hazardous-solid: #c063d8;
+
+  --radius-card: 15px;
+  --radius-pill: 50px;
+
+  --font-sans: 'Inter', system-ui, 'Segoe UI', Roboto, sans-serif;
+  /* Readings are set in Arimo in the design. */
+  --font-numeric: 'Arimo', Arial, var(--font-sans);
+
+  --screen-max-width: 430px;
+  --gutter: 26px;
+
+  color-scheme: dark;
+  font-family: var(--font-sans);
+  line-height: normal;
+  color: var(--color-text);
+  background: var(--color-bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Light mode: white page, white cards lifted by a shadow. */
+:root[data-theme='light'] {
+  --color-bg: #ffffff;
+  --color-text: #29333c;
+  --color-text-muted: #434343;
+  --color-border: #d4d4d4;
+  --color-divider: #d4d4d4;
+  --color-brand: #29333c;
+  --color-link: #0074ff;
+
+  --surface-bg: #ffffff;
+  --surface-border: transparent;
+  --surface-shadow: 0 4px 4px 2px rgb(0 0 0 / 25%);
+  --color-inset-bg: #29333c;
+  --color-inset-text: #d4d4d4;
+  --color-hover-bg: #f1f1f1;
+  --color-active-bg: #e7e7e7;
+
+  --chip-text: var(--color-text);
+  --color-row-label: #434343;
+  --livecard-bg: #ffffff;
+  --livecard-text: #29333c;
+  --livecard-divider: #d4d4d4;
+  --checkbox-bg: #ffffff;
+  --checkbox-border: #29333c;
+
+  --color-switch-track: #29333c;
+  --color-switch-pill: #ffffff;
+  --color-switch-text: #29333c;
+  --color-switch-text-muted: #d4d4d4;
+
+  --band-good-text: #0d950d;
+  --band-moderate-text: #cb8700;
+  --band-unhealthy-text: #ce6b6b;
+
+  color-scheme: light;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/*
+ * The app fills the viewport like a native screen: the page itself never
+ * scrolls, only the content area inside each screen does.
+ */
+html,
+body,
+#root {
+  margin: 0;
+  height: 100dvh;
+  overflow: hidden;
+  background: var(--color-bg);
+}
+
+h1,
+h2,
+p {
+  margin: 0;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+}
+
+img {
+  display: block;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-selected-text);
+  outline-offset: 3px;
+}

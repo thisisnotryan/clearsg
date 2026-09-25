@@ -1,0 +1,113 @@
+.header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.location {
+  flex: 1;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.settings {
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+
+.verdict {
+  margin-top: 25px;
+}
+
+.outlook {
+  display: grid;
+  /* minmax(0, …) lets the cards shrink instead of overflowing narrow phones. */
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 25px;
+  margin: 28px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.outlookCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  aspect-ratio: 1;
+  padding: 16px 4px;
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius-card);
+  background: var(--surface-bg);
+  box-shadow: var(--surface-shadow);
+}
+
+.outlookLabel {
+  /* "High today" is the widest label; it sets how small a card can get. */
+  font-size: clamp(15px, 4.5vw, 18px);
+  font-weight: 600;
+  color: var(--color-row-label);
+  white-space: nowrap;
+}
+
+.outlookValue {
+  font-family: var(--font-numeric);
+  font-size: clamp(32px, 10vw, 40px);
+  font-weight: 700;
+}
+
+.guide {
+  position: relative;
+  display: block;
+  width: 100%;
+  margin-top: 29px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-card);
+  background: none;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.guideImage {
+  width: 100%;
+  aspect-ratio: 360 / 264;
+  object-fit: cover;
+}
+
+.guideBar {
+  position: absolute;
+  inset: auto 0 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  /* Grows instead of clipping when the subtitle wraps on narrow phones. */
+  min-height: 80px;
+  padding: 12px 15px 12px 11px;
+  border-radius: var(--radius-card);
+  /* The bar sits over the photo, so it stays dark with white text in both
+     themes — the page's text colour would be unreadable here. */
+  background: rgb(0 0 0 / 50%);
+  color: #ffffff;
+  text-align: left;
+}
+
+.guideText {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.guideTitle {
+  font-size: 25px;
+  font-weight: 700;
+}
+
+.guideSubtitle {
+  font-size: 20px;
+  font-weight: 600;
+  color: #d5d5d5;
+}
