@@ -78,7 +78,10 @@ export function SettingsScreen({ profile, onBack, onEditProfile, onSignOut }: Pr
       </div>
 
       <div className={styles.row}>
-        <span className={styles.rowLabel}>Daily forecast digest</span>
+        <span className={styles.rowText}>
+          <span className={styles.rowLabel}>Daily forecast digest</span>
+          <span className={styles.rowCaption}>Sends a daily forecast digest notification at SGT: 07:00am</span>
+        </span>
         <Toggle
           checked={settings.dailyDigest}
           label="Daily forecast digest"

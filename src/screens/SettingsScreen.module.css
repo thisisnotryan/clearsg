@@ -90,10 +90,23 @@
   margin-top: 36px;
 }
 
+.rowText {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
 .rowLabel {
   font-size: 20px;
   font-weight: 700;
   color: var(--color-row-label);
+}
+
+/* Says when the digest arrives, so the switch isn't a mystery. */
+.rowCaption {
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--color-text-muted);
 }
 
 .install {
