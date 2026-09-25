@@ -122,6 +122,14 @@ export function SettingsScreen({ profile, onBack, onEditProfile, onSignOut }: Pr
         <img src={icons.logout} alt="" width={30} height={30} />
         Sign out
       </button>
+
+      {/* data.gov.sg asks that its data be credited where it is used. */}
+      <p className={styles.credit}>
+        Air quality data from NEA via{' '}
+        <a className={styles.creditLink} href="https://data.gov.sg" target="_blank" rel="noreferrer">
+          data.gov.sg
+        </a>
+      </p>
     </>
   )
 }
