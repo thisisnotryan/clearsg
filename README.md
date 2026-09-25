@@ -66,7 +66,9 @@ A caregiver gets one card per person: "+ Add another person" appends a blank car
 than one card each carries a bin that asks for confirmation before it throws those answers away.
 
 Settings live in `src/lib/settings.ts` and start from persona-based defaults (a caregiver is
-warned earlier and gets the daily digest; an outdoor worker is warned later).
+warned earlier and gets the daily digest; an outdoor worker is warned later). Coming back
+through the questions from Settings only moves the alert level if it is still the one suggested
+last time; a level someone set themselves is left alone.
 
 Readings come live from NEA via data.gov.sg (`src/lib/nea.ts`): current PSI and PM2.5 plus the
 last day of hourly readings, refreshed every 5 minutes and when the app regains focus. If a

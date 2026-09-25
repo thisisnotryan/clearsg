@@ -3,7 +3,7 @@ import { AppShell } from './components/AppShell'
 import type { Tab } from './components/BottomNav'
 import { ThresholdAlert } from './components/ThresholdAlert'
 import { clearChecklist } from './lib/checklist'
-import { clearPersonal, savePersonal, type PersonalProfile } from './lib/personal'
+import { clearPersonal, loadPersonal, savePersonal, type PersonalProfile } from './lib/personal'
 import { clearProfile, loadProfile, saveProfile, type PersonaId, type Profile, type RegionId } from './lib/profile'
 import { clearSettings, loadSettings, saveSettings } from './lib/settings'
 import { suggestedThreshold } from './data/tailored'
@@ -44,6 +44,7 @@ export default function App() {
 
   const finishOnboarding = (personal: PersonalProfile) => {
     if (!region || !persona) return
+    const previous = loadPersonal()
     const next = { region, persona }
     saveProfile(next)
     savePersonal(personal)
@@ -52,9 +53,14 @@ export default function App() {
     /*
      * Start people at an alert level that matches who they told us about:
      * sensitive groups hear about it as soon as the air stops being good.
+     *
+     * Coming back through these questions from Settings only moves the level
+     * if it is still the one we suggested last time. A level someone chose
+     * themselves is theirs, and editing who the app is for must not undo it.
      */
     const settings = loadSettings(persona)
-    saveSettings({ ...settings, alertThreshold: suggestedThreshold(personal) })
+    const ours = !editing || settings.alertThreshold === suggestedThreshold(previous)
+    if (ours) saveSettings({ ...settings, alertThreshold: suggestedThreshold(personal) })
 
     setTab(editing ? 'settings' : 'home')
     setEditing(false)
